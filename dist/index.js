@@ -9017,9 +9017,9 @@ process.nextTick(async () => {
     const repositoryBranch = github.context.ref.replace(/refs\/heads\//, '');
     const repositoryPath = `${repositoryOwner}/${repositoryName}/${repositoryBranch}`;
 
-    const url = new URL(`${repositoryPath}/env-variables`, sourceURL).toString();
+    const url = new URL(`${repositoryPath}/env-variables.yaml`, sourceURL).toString();
 
-    core.info(`Fetch .env variables from ${sourceURL} for ${repositoryPath}`);
+    core.info(`Fetch .env variables for ${sourceURL}:${repositoryPath} from ${url}`);
 
     const response = await httpClient.get(url);
 
