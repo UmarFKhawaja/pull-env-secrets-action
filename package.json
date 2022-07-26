@@ -1,6 +1,6 @@
 {
   "name": "pull-env-variables-action",
-  "version": "1.1.6",
+  "version": "1.1.7",
   "description": "Pulls .env variables from a URL to customize GitHub workflows",
   "main": "index.js",
   "scripts": {
