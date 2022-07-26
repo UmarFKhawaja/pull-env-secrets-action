@@ -17319,11 +17319,11 @@ process.nextTick(async () => {
     if (response.message.statusCode !== 200) {
       core.setFailed(`unexpected response ${response.message.statusCode} ${response.message.statusMessage}`);
     } else {
-      const envVariables = parse(
+      const { env } = parse(
         await response.readBody()
       );
 
-      core.setOutput('env-variables', envVariables);
+      core.setOutput('env', env);
     }
   } catch (error) {
     core.setFailed(error.message);

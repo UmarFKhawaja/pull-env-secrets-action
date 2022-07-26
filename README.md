@@ -10,7 +10,7 @@ This action pulls `.env` variables from a URL to populate secrets in a GitHub wo
 
 ## Outputs
 
-### `env-variables`
+### `env`
 
 The .env variables
 
