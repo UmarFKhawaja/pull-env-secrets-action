@@ -1,6 +1,7 @@
 const core = require('@actions/core');
 const github = require('@actions/github');
 const { HttpClient } = require('@actions/http-client');
+const { parse } = require('yaml');
 
 process.nextTick(async () => {
   try {
@@ -22,7 +23,9 @@ process.nextTick(async () => {
     if (response.message.statusCode !== 200) {
       core.setFailed(`unexpected response ${response.message.statusCode} ${response.message.statusMessage}`);
     } else {
-      const envVariables = await response.readBody();
+      const envVariables = parse(
+        await response.readBody()
+      );
 
       core.setOutput('env-variables', envVariables);
     }
