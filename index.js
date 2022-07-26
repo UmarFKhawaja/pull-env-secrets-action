@@ -14,7 +14,7 @@ process.nextTick(async () => {
     const repositoryBranch = github.context.ref.replace(/refs\/heads\//, '');
     const repositoryPath = `${repositoryOwner}/${repositoryName}/${repositoryBranch}`;
 
-    const url = new URL(`${repositoryPath}/env-variables.yaml`, sourceURL).toString();
+    const url = new URL(`${repositoryPath}/env.yaml`, sourceURL).toString();
 
     core.info(`Fetch .env variables for ${repositoryPath} from ${url}`);
 
