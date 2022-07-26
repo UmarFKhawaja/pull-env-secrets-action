@@ -1,0 +1,12 @@
+name: Pull .env Variables
+description: Pulls .env variables from a URL to customize GitHub workflows
+inputs:
+  source-url:
+    description: the source URL for the .env variables
+    required: true
+outputs:
+  env-variables:
+    description: the .env variables
+runs:
+  using: 'node16'
+  main: 'index.js'
