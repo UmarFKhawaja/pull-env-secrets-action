@@ -27,7 +27,7 @@ process.nextTick(async () => {
         await response.readBody()
       );
 
-      core.setOutput('env', env);
+      core.setOutput('variables', env);
     }
   } catch (error) {
     core.setFailed(error.message);
