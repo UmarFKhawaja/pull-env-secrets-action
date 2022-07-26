@@ -16,7 +16,7 @@ process.nextTick(async () => {
 
     const url = new URL(`${repositoryPath}/env-variables.yaml`, sourceURL).toString();
 
-    core.info(`Fetch .env variables for ${sourceURL}:${repositoryPath} from ${url}`);
+    core.info(`Fetch .env variables for ${repositoryPath} from ${url}`);
 
     const response = await httpClient.get(url);
 
