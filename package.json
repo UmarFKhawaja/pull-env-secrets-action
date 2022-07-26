@@ -1,9 +1,10 @@
 {
   "name": "pull-env-variables-action",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "description": "Pulls .env variables from a URL to customize GitHub workflows",
   "main": "index.js",
   "scripts": {
+    "build": "ncc build index.js --license licenses.txt",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": {
@@ -22,6 +23,7 @@
   },
   "dependencies": {
     "@actions/core": "^1.9.0",
-    "@actions/github": "^5.0.3"
+    "@actions/github": "^5.0.3",
+    "@actions/http-client": "^2.0.1"
   }
 }
