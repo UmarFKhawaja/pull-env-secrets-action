@@ -5,7 +5,7 @@ inputs:
     description: the source URL for the .env variables
     required: true
 outputs:
-  env-variables:
+  env:
     description: the .env variables
 runs:
   using: 'node16'
