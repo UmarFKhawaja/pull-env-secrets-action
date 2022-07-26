@@ -9004,26 +9004,36 @@ var __webpack_exports__ = {};
 (() => {
 const core = __nccwpck_require__(1663);
 const github = __nccwpck_require__(2033);
+const { HttpClient } = __nccwpck_require__(480);
 
-try {
-  const sourceURL = core.getInput('source-url');
+process.nextTick(async () => {
+  try {
+    const httpClient = new HttpClient();
 
-  console.log(`Fetch .env variables from ${sourceURL}`);
+    const sourceURL = core.getInput('source-url');
 
-  core.setOutput('env-variables', {
-    foo: 'FOO',
-    bar: 'BAR',
-    baz: 'BAZ',
-    timestamp: new Date()
-  });
+    const repositoryOwner = github.context.payload.repository.owner.login;
+    const repositoryName = github.context.payload.repository.name;
+    const repositoryBranch = github.context.ref.replace(/refs\/heads\//, '');
+    const repositoryPath = `${repositoryOwner}/${repositoryName}/${repositoryBranch}`;
 
-  const payload = github.context.payload;
+    const url = new URL(`${repositoryPath}/env-variables`, sourceURL).toString();
 
-  console.log(`Log the webhook payload for the event that triggered the workflow`);
-  console.log(JSON.stringify(payload, undefined, 2));
-} catch (error) {
-  core.setFailed(error.message);
-}
+    core.info(`Fetch .env variables from ${sourceURL} for ${repositoryPath}`);
+
+    const response = await httpClient.get(url);
+
+    if (response.message.statusCode !== 200) {
+      core.setFailed(`unexpected response ${response.message.statusCode} ${response.message.statusMessage}`);
+    } else {
+      const envVariables = await response.readBody();
+
+      core.setOutput('env-variables', envVariables);
+    }
+  } catch (error) {
+    core.setFailed(error.message);
+  }
+});
 
 })();
 
