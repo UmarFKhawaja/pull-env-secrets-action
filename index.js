@@ -27,6 +27,8 @@ process.nextTick(async () => {
         await response.readBody()
       );
 
+      core.info(env);
+
       core.setOutput('variables', env);
     }
   } catch (error) {
