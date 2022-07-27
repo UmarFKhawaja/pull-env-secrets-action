@@ -4,9 +4,7 @@ inputs:
   source-url:
     description: the source URL for the .env variables
     required: true
-outputs:
-  variables:
-    description: the .env variables
+outputs: {}
 runs:
   using: 'node16'
   main: 'dist/index.js'

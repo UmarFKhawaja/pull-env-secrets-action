@@ -17323,9 +17323,17 @@ process.nextTick(async () => {
         await response.readBody()
       );
 
-      core.info(JSON.stringify(env, undefined, 2));
+      env.forEach((variable) => {
+        const name = variable['name'];
+        const value = variable['value'];
+        const isSecret = variable['is-secret'];
 
-      core.setOutput('variables', env);
+        core.exportVariable(name, value);
+
+        if (isSecret) {
+          core.setSecret(value);
+        }
+      });
     }
   } catch (error) {
     core.setFailed(error.message);
