@@ -27,7 +27,7 @@ process.nextTick(async () => {
         await response.readBody()
       );
 
-      core.info(env);
+      core.info(JSON.stringify(env, undefined, 2));
 
       core.setOutput('variables', env);
     }
