@@ -11,7 +11,7 @@ process.nextTick(async () => {
 
     const repositoryOwner = github.context.payload.repository.owner.login;
     const repositoryName = github.context.payload.repository.name;
-    const repositoryBranch = github.context.ref.replace(/refs\/heads\//, '');
+    const repositoryBranch = getRepositoryBranchName();
     const repositoryPath = `${repositoryOwner}/${repositoryName}/${repositoryBranch}`;
 
     const url = new URL(`${repositoryPath}/env.yaml`, sourceURL).toString();
@@ -43,3 +43,25 @@ process.nextTick(async () => {
     core.setFailed(error.message);
   }
 });
+
+function getRepositoryBranchName() {
+  //GITHUB_HEAD_REF is only set for pull request events https://docs.github.com/en/actions/reference/environment-variables
+  const isPullRequest = !!process.env.GITHUB_HEAD_REF;
+
+  let branchName;
+
+  if (isPullRequest && process.env.GITHUB_HEAD_REF) {
+    branchName = process.env.GITHUB_HEAD_REF;
+  } else {
+    if (!process.env.GITHUB_REF) {
+      throw new Error('GITHUB_EVENT_PATH is not set');
+    }
+
+    branchName = process.env.GITHUB_REF.split('/')
+      .slice(2)
+      .join('/')
+      .replace(/\//g, '-');
+  }
+
+  return branchName;
+}
